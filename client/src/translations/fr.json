@@ -1,3 +1,6 @@
 {
-    "HELLO": "Bonjour {:name}"
+    "HELLO": "Bonjour {:name}",
+    "REPORT_AN_ANIMAL": "Signaler un animal abandonné",
+    "AINMAL_REPORTING_FORM": "Signalement d'un animal abandonné:",
+    "DATE": "Date:"
 }

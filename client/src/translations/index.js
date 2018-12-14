@@ -4,7 +4,6 @@ export default class Translation {
   constructor(language) {
     this.lang = language;
     // Don't forget to add languages after an import
-    // eslint-disable-next-line
     this.keys = {
       fr,
     };
