@@ -15,6 +15,6 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/hello', require('./controllers/hello'));
+app.use('/alerts', require('./controllers/alerts'));
 
 $server.checkDatabase();

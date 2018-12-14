@@ -28,7 +28,7 @@ export default {
     position: relative;
 
     &.router-link-exact-active {
-      color: $vueBlue;
+      color: #f9dc5c;
     }
 
     &:not(:first-child):before {

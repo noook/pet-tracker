@@ -10,7 +10,7 @@
           v-if="dropdown.show"
           @mouseleave="closeDropdown">
           <div
-            v-for="(value, index) in constraint"
+            v-for="(value, index) in constraint || values"
             @click="select(value)"
             :key="index"
             >{{ value }}
@@ -23,12 +23,12 @@
 
 <script>
 export default {
-  props: ['values', 'constraint', 'interval'],
+  props: ['values', 'constraint', 'value'],
   data() {
     return {
       dropdown: {
         show: false,
-        value: this.interval,
+        value: this.value,
       },
     };
   },
@@ -39,7 +39,7 @@ export default {
       }, 500);
     },
     select(value) {
-      this.$emit('update:interval', value);
+      this.$emit('update:value', value);
       this.dropdown.value = value;
     },
   },
@@ -66,6 +66,7 @@ export default {
       height: 40px;
       padding: 0 15px;
       flex: 1 1 0;
+      flex-wrap: nowrap;
       @include d-flex-centered(center);
 
       &:last-child {
@@ -85,10 +86,12 @@ export default {
           top: 41px;
           max-height: 200px;
           overflow-y: auto;
+          z-index: 1;
 
           > div {
             text-align: center;
             padding: 10px 0;
+            background-color: #fff;
             position: relative;
 
             &:hover {
