@@ -27,12 +27,13 @@ export default {
     font-weight: 500;
     position: relative;
 
-    &.router-link-active {
-      font-weight: bold;
+    &.router-link-exact-active {
+      color: $vueBlue;
     }
 
     &:not(:first-child):before {
       content: '|';
+      color: #fff;
       position: absolute;
       left: -1px;
     }

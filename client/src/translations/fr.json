@@ -2,5 +2,7 @@
     "HELLO": "Bonjour {:name}",
     "REPORT_AN_ANIMAL": "Signaler un animal abandonné",
     "AINMAL_REPORTING_FORM": "Signalement d'un animal abandonné:",
-    "DATE": "Date:"
+    "DATE": "Date:",
+    "YOUR_EMAIL": "Votre email:",
+    "WE_WILL_CONTACT_YOU_ON_UPDATE": "Votre email nous servira à vous contacter lorsque nous aurons des mises à jour sur l'état de votre signalement"
 }

@@ -5,7 +5,10 @@
       @click="dropdown.show = !dropdown.show">
       <div class="dropdown">
         <div class="value">{{ dropdown.value }}</div>
-        <div class="options" v-if="dropdown.show">
+        <div
+          class="options"
+          v-if="dropdown.show"
+          @mouseleave="closeDropdown">
           <div
             v-for="(value, index) in constraint"
             @click="select(value)"
@@ -30,6 +33,11 @@ export default {
     };
   },
   methods: {
+    closeDropdown() {
+      setTimeout(() => {
+        this.dropdown.show = false;
+      }, 500);
+    },
     select(value) {
       this.$emit('update:interval', value);
       this.dropdown.value = value;
