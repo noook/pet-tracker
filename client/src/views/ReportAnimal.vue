@@ -3,7 +3,7 @@
     <h1 v-if="!submitted">{{ translations.AINMAL_REPORTING_FORM }}</h1>
     <form @submit="submitAlert" v-if="!submitted">
       <div class="group">
-        <label for="report-date">{{ translations.DATE }}</label>
+        <label for="report-date">{{ translations.FORM_DATE }}</label>
         <input
           type="date"
           name="date"
@@ -25,7 +25,7 @@
       </div>
       <div class="group row">
         <div class="address row-item">
-          <label for="color">{{ translations.COLOR }}</label>
+          <label for="color">{{ translations.FORM_COLOR }}</label>
           <input
             type="text"
             v-model="form.color"
@@ -34,7 +34,7 @@
         </div>
         <div class="animal-type row-item">
           <div class="dropdown-label">
-            <label>{{ translations.ANIMAL_TYPE }}</label>
+            <label>{{ translations.FORM_ANIMAL_TYPE }}</label>
           </div>
           <Dropdown
             :values="animals.list"
@@ -44,7 +44,7 @@
       <div class="group row">
         <div class="dropdown-label row-item">
           <div>
-            <label>{{ translations.ANIMAL_HEALTH }}</label>
+            <label>{{ translations.FORM_ANIMAL_HEALTH }}</label>
             <Dropdown
               :values="healths.list"
               :value.sync="healths.chosen"/>
@@ -63,7 +63,7 @@
       <div class="group row">
         <div class="alerter-email row-item">
           <div class="dropdown-label">
-            <label for="alerter-email">{{ translations.YOUR_EMAIL }}</label>
+            <label for="alerter-email">{{ translations.FORM_YOUR_EMAIL }}</label>
             <Tooltip :text="translations.WE_WILL_CONTACT_YOU_ON_UPDATE"/>
           </div>
           <input
@@ -77,7 +77,7 @@
       <p>{{ translations.WHERE_DID_YOU_FIND_IT }}</p>
       <div class="group row">
         <div class="address row-item">
-          <label for="address">{{ translations.ADDRESS }}</label>
+          <label for="address">{{ translations.FORM_ADDRESS }}</label>
           <input
             type="text"
             v-model="form.where.address"
@@ -85,7 +85,7 @@
             id="address">
         </div>
         <div class="address row-item">
-          <label for="zipcode">{{ translations.ZIPCODE }}</label>
+          <label for="zipcode">{{ translations.FORM_ZIPCODE }}</label>
           <input
             type="text"
             v-model="form.where.zipcode"
@@ -94,7 +94,7 @@
             id="zipcode">
         </div>
         <div class="address row-item">
-          <label for="city">{{ translations.CITY }}</label>
+          <label for="city">{{ translations.FORM_CITY }}</label>
           <input
             v-model="form.where.city"
             type="text"

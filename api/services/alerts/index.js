@@ -16,7 +16,7 @@ class Alerts {
 			date: date.toDate(),
 			caller: data.email,
 			animal: data.animal,
-			address: data.where.address,
+			address: `${data.where.address}\n${data.where.zipcode}, ${data.where.city}`,
 			health: data.health,
 			state: 'ALERTED',
 			collar: data.collar,
