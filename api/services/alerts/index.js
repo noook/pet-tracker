@@ -7,8 +7,6 @@ const
 	moment = require('moment'),
 	$db = require.main.require('./database');
 
-moment().utcOffset(8);
-
 class Alerts {
 	create(data) {
 		const date = moment(data.date);
