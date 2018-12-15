@@ -1,24 +1,18 @@
 <template>
   <div class="checkbox" @click="toggle">
-    <img src="@/assets/svg/check-blue.svg" alt="check" v-show="toggled">
+    <img src="@/assets/svg/check-blue.svg" alt="check" v-show="value">
   </div>
 </template>
 
 <script>
 export default {
   name: 'Checkbox',
-  data() {
-    return {
-      toggled: this.value,
-    };
-  },
   props: {
     value: Boolean,
   },
   methods: {
     toggle() {
-      this.toggled = !this.toggled;
-      this.$emit('update:value', this.toggled);
+      this.$emit('update:value', !this.value);
     },
   },
 };
