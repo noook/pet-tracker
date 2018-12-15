@@ -1,0 +1,27 @@
+{
+  "name": "pet-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noook/pet-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noook/pet-tracker/issues"
+  },
+  "homepage": "https://github.com/noook/pet-tracker#readme",
+  "devDependencies": {
+    "husky": "^1.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "./client/node_modules/sort-json/app/cmd.js ./client/src/translations/fr.json; git add ./client/src/translations/fr.json"
+    }
+  }
+}
