@@ -33,6 +33,40 @@ class Alerts {
 				code: 500,
 			}));
 	}
+
+	getAll() {
+		return $db
+			.select('*')
+			.from('alerts')
+			.then(rows => {
+				const alerts = [];
+				rows.forEach(item => {
+					const alert = {
+						...item,
+					}
+
+					delete alert.hour_from;
+					delete alert.hour_to;
+					delete alert.created_at;
+
+					alerts.push({
+						...alert,
+						interval: {
+							from: item.hour_from,
+							to: item.hour_to,
+						},
+					});
+				});
+				return {
+					code: 200,
+					data: alerts,
+				};
+			})
+			.catch(err => ({
+				code: 500,
+				data: null,
+			}));
+	}
 }
 
 module.exports = new Alerts();

@@ -6,6 +6,8 @@
     "DATE": "Date:",
     "BETWEEN": "Entre",
     "AND": "et",
+    "YES": "Oui",
+    "NO": "Non",
     "HOURS": "heures",
     "YOUR_EMAIL": "Votre email:",
     "EMAIL": "Email",
@@ -27,5 +29,6 @@
     "ZIPCODE": "Code postal:",
     "CITY": "Ville:",
     "SUBMIT": "Envoyer",
-    "THANKS_FOR_SUBMITTING": "Merci pour le signalement ! Nous vous enverrons des mails pour vous informer de l'avancement des recherches de l'animal que vous avez signalé."
+    "THANKS_FOR_SUBMITTING": "Merci pour le signalement ! Nous ,vous enverrons des mails pour vous informer de l'avancement des recherches de l'animal que vous avez signalé.",
+    "REPORTS": "Signalements"
 }
