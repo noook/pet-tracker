@@ -3,6 +3,11 @@ const
 	{ $alerts, $mails } = require.main.require('./services'),
 	app = express.Router();
 
+app.get('/', async (req, res, next) => {
+	const { code, data } = await $alerts.getAll();
+	res.status(code).send(data);
+});
+
 app.post('/', (req, res, next) => {
 	$alerts.create(req.body)
 		.then(({ code, data }) => {
@@ -14,9 +19,14 @@ app.post('/', (req, res, next) => {
 		.catch(({ code }) => res.status(code).send());
 });
 
-app.get('/', async (req, res, next) => {
-	const { code, data } = await $alerts.getAll();
-	res.status(code).send(data);
+app.put('/', async (req, res, next) => {
+	const { code } = await $alerts.edit(req.body);
+	res.status(code).send({});
+});
+
+app.delete('/', async (req, res, next) => {
+	const { code } = await $alerts.delete(req.body.id);
+	res.status(code).send({});
 });
 
 module.exports = app;

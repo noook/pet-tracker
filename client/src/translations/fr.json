@@ -1,5 +1,5 @@
 {
-    "ADDRESS": "Addresse",
+    "ADDRESS": "Adresse",
     "AINMAL_REPORTING_FORM": "Signalement d'un animal abandonné :",
     "AND": "et",
     "ANIMAL": "Animal",
@@ -10,7 +10,10 @@
     "COLLAR": "Collier",
     "COLOR": "Couleur",
     "DATE": "Date",
+    "DELETE": "Supprimer",
     "DOG": "Chien",
+    "EDIT": "Editer",
+    "EDITION": "Edition",
     "EMAIL": "Email",
     "FORM_ADDRESS": "Adresse:",
     "FORM_ANIMAL_HEALTH": "Santé de l'animal :",
@@ -42,9 +45,12 @@
     "STATE_SAVED": "Sauvé",
     "STATUS": "Statut",
     "SUBMIT": "Envoyer",
+    "SUCCESS": "Succès",
+    "SUCCESS_CONTENT_DELETED": "L'alerte a bien été supprimée.",
+    "SUCCESS_CONTENT_EDITED": "L'alerte a bien été modifiée.",
     "THANKS_FOR_SUBMITTING": "Merci pour le signalement ! Nous vous enverrons des mails pour vous informer de l'avancement des recherches de l'animal que vous avez signalé.",
     "VERY_LOW": "Très faible",
     "WE_WILL_CONTACT_YOU_ON_UPDATE": "Votre email nous servira à vous contacter lorsque nous aurons des mises à jour sur l'état de votre signalement",
-    "WHERE_DID_YOU_FIND_IT": "Où avez vous trouvé l'animal ?",
+    "WHERE_DID_YOU_FIND_IT": "Où avez-vous trouvé l'animal ?",
     "YES": "Oui"
 }

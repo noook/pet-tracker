@@ -18,5 +18,16 @@ export default new Router({
       name: 'report',
       component: ReportAnimal,
     },
+    {
+      path: '/report/edit',
+      name: 'edit-report',
+      component: ReportAnimal,
+      beforeEnter: (to, from, next) => {
+        if (!to.params.id) {
+          next({ path: '/' });
+        }
+        next();
+      },
+    },
   ],
 });

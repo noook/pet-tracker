@@ -24,6 +24,7 @@
           <td>{{ translations.HEALTH }}</td>
           <td>{{ translations.COLLAR }}</td>
           <td>{{ translations.STATUS }}</td>
+          <td>{{ translations.EDIT }}</td>
         </thead>
         <tr v-for="item in filteredAlerts" :key="item.id">
           <td>{{ item.date | moment("d/M/YY")}}</td>
@@ -33,12 +34,19 @@
           </td>
           <td>{{ translations[item.animal] }}</td>
           <td>{{ item.color }}</td>
-          <td v-html="$options.filters.nl2br(item.address)"></td>
+          <td class="address">{{ item.address }}<br>{{ item.zipcode }}, {{ item.city }}</td>
           <td>{{ translations[item.health] }}</td>
           <td>
             <img src="@/assets/svg/check-blue.svg" alt="Check" v-if="item.collar">
           </td>
           <td>{{ translations[`STATE_${item.state}`] }}</td>
+          <td>
+            <img
+              class="edit-button"
+              @click="$router.replace({ name: 'edit-report', params: item })"
+              src="@/assets/svg/button-edit.svg"
+              alt="Edit button">
+          </td>
         </tr>
       </table>
     </section>
@@ -118,11 +126,6 @@ export default {
       }
     },
   },
-  filters: {
-    nl2br(string) {
-      return string.split('\n').join('<br>');
-    },
-  },
 };
 </script>
 
@@ -133,7 +136,7 @@ export default {
       text-align: center;
     }
     > section {
-      width: 70%;
+      width: 80%;
       margin: 20px auto;
 
       > .filters {
@@ -166,10 +169,18 @@ export default {
             padding: 20px;
             border: 1px solid rgba(#3b3b3b, .2);
 
+            &.address {
+              min-width: 200px;
+            }
+
             > img {
               width: 50%;
               display: block;
               margin: auto;
+
+              &.edit-button:hover {
+                cursor: pointer;
+              }
             }
           }
 

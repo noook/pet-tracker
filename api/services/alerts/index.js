@@ -16,12 +16,15 @@ class Alerts {
 			date: date.toDate(),
 			caller: data.email,
 			animal: data.animal,
-			address: `${data.where.address}\n${data.where.zipcode}, ${data.where.city}`,
+			address: data.where.address,
+			city: data.where.city,
+			zipcode: data.where.zipcode,
 			health: data.health,
 			state: 'ALERTED',
 			collar: data.collar,
 			color: data.color,
 		};
+
 		return $db
 			.insert(values)
 			.into('alerts')
@@ -31,6 +34,50 @@ class Alerts {
 			}))
 			.catch(err => ({
 				code: 500,
+			}));
+	}
+
+	edit(data) {
+		const date = moment(data.date);
+		const id = data.id;
+		delete data.id;
+		const values = {
+			hour_from: date.hours(data.interval.from).toDate(),
+			hour_to: date.hours(data.interval.to).toDate(),
+			date: date.toDate(),
+			caller: data.email,
+			animal: data.animal,
+			address: data.where.address,
+			city: data.where.city,
+			zipcode: data.where.zipcode,
+			health: data.health,
+			state: 'ALERTED',
+			collar: data.collar,
+			color: data.color,
+		};
+
+		return $db
+			.from('alerts')
+			.where({ id })
+			.update(values)
+			.then(row => ({
+				code: 200
+			}))
+			.catch(err => ({
+				code: 500
+			}));
+	}
+
+	delete(id) {
+		return $db
+			.from('alerts')
+			.where({ id })
+			.del()
+			.then(row => ({
+				code: 205
+			}))
+			.catch(err => ({
+				code: 500
 			}));
 	}
 

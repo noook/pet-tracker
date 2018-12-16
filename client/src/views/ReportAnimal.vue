@@ -1,6 +1,7 @@
 <template>
   <div class="report-an-animal">
     <h1 v-if="!submitted">{{ translations.AINMAL_REPORTING_FORM }}</h1>
+    <h3 v-if="edit && !submitted">{{ translations.EDITION }}</h3>
     <form @submit="submitAlert" v-if="!submitted">
       <div class="group">
         <label for="report-date">{{ translations.FORM_DATE }}</label>
@@ -102,17 +103,33 @@
             id="city">
         </div>
       </div>
-      <div class="button-submit" @click="submitAlert">{{ translations.SUBMIT }}</div>
+      <div
+        class="buttons button-submit"
+        v-if="!edit"
+        @click="submitAlert">{{ translations.SUBMIT }}</div>
+      <div
+        class="buttons button-edit"
+        v-if="edit"
+        @click="editAlert">{{ translations.EDIT }}</div>
+      <div
+        class="buttons button-delete"
+        v-if="edit"
+        @click="deleteAlert">{{ translations.DELETE }}</div>
     </form>
     <div v-if="submitted" class="submit-success">
-      <h2>{{ translations.THANKS_FOR_SUBMITTING}}</h2>
-      <div class="button-submit" @click="$router.push('/')">{{ translations.HOME }}</div>
+      <h3>{{ translations.SUCCESS }}</h3>
+      <h2 v-if="!edit">{{ translations.THANKS_FOR_SUBMITTING}}</h2>
+      <h2 v-if="submitted == 'edited'">{{ translations.SUCCESS_CONTENT_EDITED}}</h2>
+      <h2 v-if="submitted == 'deleted'">{{ translations.SUCCESS_CONTENT_DELETED}}</h2>
+      <div class="buttons button-submit" @click="$router.push('/')">{{ translations.HOME }}</div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
+
 import Dropdown from '@/components/inputs/Dropdown.vue';
 import Tooltip from '@/components/inputs/Tooltip.vue';
 import Checkbox from '@/components/inputs/Checkbox.vue';
@@ -142,7 +159,33 @@ export default {
         now,
         collar: false,
       },
+      edit: this.$route.name === 'edit-report',
     };
+  },
+  created() {
+    if (this.$route.name !== 'edit-report') {
+      return false;
+    }
+    const { params } = this.$route;
+    this.id = params.id;
+    this.form = {
+      where: {
+        address: params.address,
+        zipcode: params.zipcode,
+        city: params.city,
+      },
+      color: params.color,
+      email: params.caller,
+      date: moment(params.date).format('YYYY-M-D'),
+      collar: params.collar,
+    };
+    this.interval = {
+      from: parseInt(moment(params.interval.from).format('H'), 10),
+      to: parseInt(moment(params.interval.to).format('H'), 10),
+    };
+    this.animals = params.animal;
+    this.healths = params.health;
+    return true;
   },
   components: {
     Dropdown,
@@ -156,54 +199,88 @@ export default {
     validTo() {
       return this.hours.filter(v => v > this.interval.from);
     },
-    animals() {
-      return {
-        chosen: this.translations.CAT,
-        list: [
-          this.translations.CAT,
-          this.translations.DOG,
-          this.translations.PARROT,
-          this.translations.RABBIT,
-        ],
-        values: {
-          CAT: this.translations.CAT,
-          DOG: this.translations.DOG,
-          PARROT: this.translations.PARROT,
-          RABBIT: this.translations.RABBIT,
-        },
-      };
+    animals: {
+      get() {
+        return {
+          chosen: this.translations.CAT,
+          list: [
+            this.translations.CAT,
+            this.translations.DOG,
+            this.translations.PARROT,
+            this.translations.RABBIT,
+          ],
+          values: {
+            CAT: this.translations.CAT,
+            DOG: this.translations.DOG,
+            PARROT: this.translations.PARROT,
+            RABBIT: this.translations.RABBIT,
+          },
+        };
+      },
+      set(value) {
+        this.animals.chosen = this.translations[value];
+      },
     },
-    healths() {
-      return {
-        chosen: this.translations.MEDIUM,
-        list: [
-          this.translations.VERY_LOW,
-          this.translations.LOW,
-          this.translations.MEDIUM,
-          this.translations.GOOD,
-        ],
-        values: {
-          VERY_LOW: this.translations.VERY_LOW,
-          LOW: this.translations.LOW,
-          MEDIUM: this.translations.MEDIUM,
-          GOOD: this.translations.GOOD,
-        },
-      };
+    chosenAnimal() {
+      const animals = Object.entries(this.animals.values);
+      return animals.find(item => item[1] === this.animals.chosen)[0];
+    },
+    chosenHealth() {
+      const healths = Object.entries(this.healths.values);
+      return healths.find(item => item[1] === this.healths.chosen)[0];
+    },
+    healths: {
+      get() {
+        return {
+          chosen: this.translations.MEDIUM,
+          list: [
+            this.translations.VERY_LOW,
+            this.translations.LOW,
+            this.translations.MEDIUM,
+            this.translations.GOOD,
+          ],
+          values: {
+            VERY_LOW: this.translations.VERY_LOW,
+            LOW: this.translations.LOW,
+            MEDIUM: this.translations.MEDIUM,
+            GOOD: this.translations.GOOD,
+          },
+        };
+      },
+      set(value) {
+        this.healths.chosen = this.translations[value];
+      },
     },
   },
   methods: {
     submitAlert() {
-      const animals = Object.entries(this.animals.values);
-      const animal = animals.find(item => item[1] === this.animals.chosen)[0];
-      const healths = Object.entries(this.healths.values);
-      const health = healths.find(item => item[1] === this.healths.chosen)[0];
       axios.post('http://localhost:3000/alerts', {
         ...this.form,
         interval: this.interval,
-        animal,
-        health,
+        animal: this.chosenAnimal,
+        health: this.chosenHealth,
       })
         .then(() => { this.submitted = true; })
+        .catch(err => console.log(err)); // eslint-disable-line
+    },
+    editAlert() {
+      axios.put('http://localhost:3000/alerts', {
+        id: this.id,
+        ...this.form,
+        interval: this.interval,
+        animal: this.chosenAnimal,
+        health: this.chosenHealth,
+      })
+        .then(() => { this.submitted = 'edited'; })
+        .catch(err => console.log(err)); // eslint-disable-line
+    },
+    deleteAlert() {
+      axios.delete('http://localhost:3000/alerts', {
+        data: {
+          id: this.id,
+        },
+      })
+        .then(() => { this.submitted = 'deleted'; })
         .catch(err => console.log(err)); // eslint-disable-line
     },
   },
@@ -231,6 +308,12 @@ export default {
       color: $vueGreen;
       font-size: 1.5rem;
       margin: 50px 0;
+    }
+
+    h3 {
+      color: $vueGreen;
+      font-size: 1.5rem;
+      margin: 10px 0;
     }
 
     > h1 {
@@ -308,13 +391,24 @@ export default {
         }
       }
     }
-    .button-submit {
+
+    .buttons {
       padding: 10px 20px;
       margin-top: 10px;
+      margin-right: 10px;
       display: inline-block;
-      background-color: $vueGreen;
       color: #fff;
       border-radius: 5px;
+
+      &.button-submit {
+        background-color: $vueGreen;
+      }
+      &.button-edit {
+        background-color: $flatBlue;
+      }
+      &.button-delete {
+        background-color: $flatRed;
+      }
 
       &:hover {
         cursor: pointer;
