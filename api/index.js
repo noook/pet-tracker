@@ -16,5 +16,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/alerts', require('./controllers/alerts'));
+app.use('/squads', require('./controllers/squads'));
 
 $server.checkDatabase();

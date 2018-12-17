@@ -6,5 +6,8 @@ module.exports = {
   client: 'pg',
   connection: {
     ...config.db
+  },
+  seeds: {
+    directory: './seeds'
   }
 };

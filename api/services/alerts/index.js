@@ -85,6 +85,7 @@ class Alerts {
 		return $db
 			.select('*')
 			.from('alerts')
+			.orderBy('id', 'desc')
 			.then(rows => {
 				const alerts = [];
 				rows.forEach(item => {
@@ -109,6 +110,23 @@ class Alerts {
 					data: alerts,
 				};
 			})
+			.catch(err => ({
+				code: 500,
+				data: null,
+			}));
+	}
+
+	get(id) {
+		return $db
+			.select('alerts.*', 'squads.name as squad_name')
+			.from('alerts')
+			.where('alerts.id', id)
+			.joinRaw('left join squads on (alerts.assigned_squad IS NOT null AND alerts.assigned_squad = squads.id)')
+			.first()
+			.then(data => ({
+				code: 200,
+				data
+			}))
 			.catch(err => ({
 				code: 500,
 				data: null,

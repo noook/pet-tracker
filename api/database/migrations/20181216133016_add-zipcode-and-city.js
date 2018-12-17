@@ -2,7 +2,6 @@
 exports.up = function(knex, Promise) {
 	return knex.schema.hasTable('alerts')
 		.then(exists => {
-			console.log(exists);
 			if (exists) {
 				return knex.schema.table('alerts', function(table) {
 					table.string('zipcode', 5);

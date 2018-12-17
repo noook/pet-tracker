@@ -2,6 +2,7 @@
   <div class="nav">
     <router-link to="/">Home</router-link>
     <router-link to="/report">{{ translations.REPORT_AN_ANIMAL }}</router-link>
+    <router-link to="/report/assign">{{ translations.ASSIGN_A_REPORT }}</router-link>
   </div>
 </template>
 

@@ -25,9 +25,10 @@
           <td>{{ translations.COLLAR }}</td>
           <td>{{ translations.STATUS }}</td>
           <td>{{ translations.EDIT }}</td>
+          <td>{{ translations.DETAILS }}</td>
         </thead>
         <tr v-for="item in filteredAlerts" :key="item.id">
-          <td>{{ item.date | moment("d/M/YY")}}</td>
+          <td>{{ item.date | moment("D/M/YY")}}</td>
           <td>{{ item.interval.from | moment("H[h]")}}-{{ item.interval.to | moment("H[h]") }}</td>
           <td>
             <a :href="'mailto:' + item.caller">{{ item.caller }}</a>
@@ -46,6 +47,14 @@
               @click="$router.replace({ name: 'edit-report', params: item })"
               src="@/assets/svg/button-edit.svg"
               alt="Edit button">
+          </td>
+          <td>
+            <router-link
+              class="alert-detail"
+              :to="{
+                name: 'report-detail',
+                params: { id: item.id }
+              }">&hellip;</router-link>
           </td>
         </tr>
       </table>
@@ -136,8 +145,11 @@ export default {
       text-align: center;
     }
     > section {
-      width: 80%;
       margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
       > .filters {
         @include d-flex-centered(flex-start);
@@ -181,6 +193,15 @@ export default {
               &.edit-button:hover {
                 cursor: pointer;
               }
+            }
+
+            > a.alert-detail {
+              display: block;
+              text-decoration: inherit;
+              font-size: 1.5rem;
+              width: 100%;
+              text-align: center;
+              color: #3b3b3b;
             }
           }
 

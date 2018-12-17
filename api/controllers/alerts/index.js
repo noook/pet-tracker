@@ -8,6 +8,11 @@ app.get('/', async (req, res, next) => {
 	res.status(code).send(data);
 });
 
+app.get('/:id', async (req, res, next) => {
+	const { code, data } = await $alerts.get(req.params.id);
+	res.status(code).send(data);
+});
+
 app.post('/', (req, res, next) => {
 	$alerts.create(req.body)
 		.then(({ code, data }) => {
