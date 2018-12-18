@@ -2,6 +2,16 @@ module.exports = {
   db: {
     host: '127.0.0.1',
     user: 'username',
-    database: 'database'
-  }
-}
+    database: 'pet-tracker'
+  },
+  smtp: {
+    host: 'smtpserver',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'username',
+      pass: "password",
+    },
+  },
+  prevented: 'personToPrevent'
+};
