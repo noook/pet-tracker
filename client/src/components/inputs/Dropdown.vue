@@ -40,6 +40,7 @@ export default {
     },
     select(value) {
       this.$emit('update:value', value);
+      this.$emit('update', value);
       this.dropdown.value = value;
     },
   },

@@ -132,6 +132,39 @@ class Alerts {
 				data: null,
 			}));
 	}
+
+	async update(id, values) {
+		let squad;
+		if (values.squad != 'NONE') {
+			squad = await $db.select('id')
+				.from('squads')
+				.where({ name: values.squad })
+				.first()
+				.then(row => row.id)
+				.catch(err => console.log(err));
+		} else {
+			squad = null;
+		}
+		return $db
+			.update({
+				state: values.state,
+				assigned_squad: squad || null,
+			})
+			.from('alerts')
+			.where({ id })
+			.returning(['id', 'state'])
+			.then(row => ({
+				code: 200,
+				data: {
+					...row[0],
+					squad: values.squad,
+				},
+			}))
+			.catch(err => ({
+				code: 500,
+				data: null,
+			}));
+	}
 }
 
 module.exports = new Alerts();
